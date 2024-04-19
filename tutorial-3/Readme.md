@@ -1,4 +1,4 @@
-# Running the next command:
+# Running the next commands:
 
 ```bash
 kubectl apply -f Pod-with-volume.yml 
