@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+  labels:
+    name: my-testing
+spec:
+  containers:
+  - name: ubuntu1
+    image: ubuntu
+    tty: true
+    volumeMounts:
+      - name: volume-test
+        mountPath: /var/www
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  - name: ubuntu2
+    image: ubuntu
+    tty: true
+    volumeMounts:
+      - name: volume-test
+        mountPath: /root/test
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  volumes:
+    - name: volume-test
+      emptyDir: {}
