@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: example-namespace
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: example-configmap
+  namespace: example-namespace
+data:
+  key1: value1
+  key2: value2
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-test-app
+  labels:
+    name: myapp
+  namespace: example-namespace
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+    envFrom:
+      - configMapRef:
+          name: example-configmap
+
+  - name: busybox
+    image: busybox
+    command: ['sh', '-c', 'echo Hello Kubernetes!! && sleep 3600']
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
